@@ -1,0 +1,92 @@
+Started by user Subodh Cyber
+Building remotely on Jenkins-Slave in workspace /root/jenkins-slave/workspace/MyTomcat Pipeline
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/subodhp/CI-CD-Jenkins-Docker-Github.git # timeout=10
+Fetching upstream changes from https://github.com/subodhp/CI-CD-Jenkins-Docker-Github.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/subodhp/CI-CD-Jenkins-Docker-Github.git +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision 8848580f9b213cdebcd0eb066ccfc967d914b4a7 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 8848580f9b213cdebcd0eb066ccfc967d914b4a7
+ > git rev-list 8848580f9b213cdebcd0eb066ccfc967d914b4a7 # timeout=10
+[MyTomcat Pipeline] $ docker build -t 172.17.0.2:5000/mytomcat:jenkins --pull=true "/root/jenkins-slave/workspace/MyTomcat Pipeline"
+/etc/sysconfig/docker: line 41: unix:///var/run/docker.sock: No such file or directory
+Sending build context to Docker daemon 120.8 kB
+
+Step 1 : FROM 172.17.0.2:5000/centos_systemd:latest
+Trying to pull repository 172.17.0.2:5000/centos_systemd ... 
+sha256:574fa523dd5bc722c0efdde118b68090921041b71ba252df4b9cadf969745c98: Pulling from 172.17.0.2:5000/centos_systemd
+Digest: sha256:574fa523dd5bc722c0efdde118b68090921041b71ba252df4b9cadf969745c98
+Status: Image is up to date for 172.17.0.2:5000/centos_systemd:latest
+ ---> 4c8d701144c0
+Step 2 : MAINTAINER Subodh Pachghare version: 0.1 <subodh.cyber@gmail.com>
+ ---> Using cache
+ ---> d2bd54cb0b6d
+Step 3 : RUN yum install -y tomcat tomcat-webapps tomcat-admin-webapps wget
+ ---> Using cache
+ ---> ea3ec4522793
+Step 4 : RUN systemctl enable tomcat
+ ---> Using cache
+ ---> e9727e37e4c3
+Step 5 : RUN cd /usr/share/tomcat/webapps && wget https://tomcat.apache.org/tomcat-6.0-doc/appdev/sample/sample.war
+ ---> Using cache
+ ---> fe9306bd263d
+Step 6 : EXPOSE 8080
+ ---> Using cache
+ ---> b4d87199e57e
+Step 7 : CMD /usr/sbin/init
+ ---> Using cache
+ ---> 3eae7b04dd10
+Successfully built 3eae7b04dd10
+[MyTomcat Pipeline] $ docker tag 3eae7b04dd10 172.17.0.2:5000/mytomcat:latest
+/etc/sysconfig/docker: line 41: unix:///var/run/docker.sock: No such file or directory
+[MyTomcat Pipeline] $ docker inspect 3eae7b04dd10
+/etc/sysconfig/docker: line 41: unix:///var/run/docker.sock: No such file or directory
+[MyTomcat Pipeline] $ docker push 172.17.0.2:5000/mytomcat:jenkins
+/etc/sysconfig/docker: line 41: unix:///var/run/docker.sock: No such file or directory
+The push refers to a repository [172.17.0.2:5000/mytomcat]
+0645d4f02141: Preparing
+666b88394449: Preparing
+76c4ad389070: Preparing
+c186afe9b64b: Preparing
+808638c53536: Preparing
+c8391c1195c6: Preparing
+b51149973e6a: Preparing
+c8391c1195c6: Waiting
+b51149973e6a: Waiting
+c186afe9b64b: Layer already exists
+0645d4f02141: Layer already exists
+808638c53536: Layer already exists
+b51149973e6a: Layer already exists
+76c4ad389070: Layer already exists
+666b88394449: Layer already exists
+c8391c1195c6: Layer already exists
+jenkins: digest: sha256:778cd1548e7e36b8d51077ff9cc7f0b5c115d7a8d68ba2ee7b7dffce20dfea90 size: 1788
+[MyTomcat Pipeline] $ docker push 172.17.0.2:5000/mytomcat:latest
+/etc/sysconfig/docker: line 41: unix:///var/run/docker.sock: No such file or directory
+The push refers to a repository [172.17.0.2:5000/mytomcat]
+0645d4f02141: Preparing
+666b88394449: Preparing
+76c4ad389070: Preparing
+c186afe9b64b: Preparing
+808638c53536: Preparing
+c8391c1195c6: Preparing
+b51149973e6a: Preparing
+c8391c1195c6: Waiting
+b51149973e6a: Waiting
+0645d4f02141: Layer already exists
+c186afe9b64b: Layer already exists
+666b88394449: Layer already exists
+c8391c1195c6: Layer already exists
+808638c53536: Layer already exists
+76c4ad389070: Layer already exists
+b51149973e6a: Layer already exists
+latest: digest: sha256:778cd1548e7e36b8d51077ff9cc7f0b5c115d7a8d68ba2ee7b7dffce20dfea90 size: 1788
+[Docker] INFO: set portBindings: 8080:8080
+[Docker] INFO: set portBindings: /sys/fs/cgroup:/sys/fs/cgroup:ro
+[Docker] INFO: created container id ad446046f8e5110882c7341b86bf782a549c2fd7d5146f453e870cb3c009d927 (from image 172.17.0.2:5000/mytomcat:jenkins)
+[Docker] INFO: started container id mytomcat1
+Finished: SUCCESS
