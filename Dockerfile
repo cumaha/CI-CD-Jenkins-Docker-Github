@@ -3,6 +3,7 @@
 FROM 172.17.0.2:5000/centos_systemd:latest
 MAINTAINER Subodh Pachghare version: 0.1 <subodh.cyber@gmail.com>
 
+RUN echo nameserver 8.8.4.4 > /etc/resolv.conf
 RUN yum install -y tomcat tomcat-webapps tomcat-admin-webapps wget
 RUN systemctl enable tomcat
 RUN cd /usr/share/tomcat/webapps && wget https://tomcat.apache.org/tomcat-6.0-doc/appdev/sample/sample.war
